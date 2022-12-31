@@ -7,19 +7,52 @@
           title="New and Trending"
           active
         >
-          <Game-List-Container></Game-List-Container>
+          <template v-if="loadingGames && errorRequestGmaes.length === 0">
+            <Loading-wrapper></Loading-wrapper>
+          </template>
+          <template v-else-if="errorRequestGmaes.length !== 0">
+            <Error-wrapper :error="errorRequestGmaes"></Error-wrapper>
+          </template>
+          <template v-else>
+            <Game-List-Container :games="games"></Game-List-Container>
+          </template>
         </b-tab>
-        <b-tab v-on:click="handleChangeTab(params.seller)" title="Top Sellers"
-          ><p>Top Sellers</p></b-tab
-        >
+        <b-tab v-on:click="handleChangeTab(params.seller)" title="Top Sellers">
+          <template v-if="loadingGames && errorRequestGmaes.length === 0">
+            <Loading-wrapper></Loading-wrapper>
+          </template>
+          <template v-else-if="errorRequestGmaes.length !== 0">
+            <Error-wrapper :error="errorRequestGmaes"></Error-wrapper>
+          </template>
+          <template v-else>
+            <Game-List-Container :games="games"></Game-List-Container>
+          </template>
+        </b-tab>
         <b-tab
           v-on:click="handleChangeTab(params.played)"
           title="What's Being Played"
-          ><p>What's Being Played</p></b-tab
         >
-        <b-tab v-on:click="handleChangeTab(params.upComing)" title="Upcoming"
-          ><p>Upcoming</p></b-tab
-        >
+          <template v-if="loadingGames && errorRequestGmaes.length === 0">
+            <Loading-wrapper></Loading-wrapper>
+          </template>
+          <template v-else-if="errorRequestGmaes.length !== 0">
+            <Error-wrapper :error="errorRequestGmaes"></Error-wrapper>
+          </template>
+          <template v-else>
+            <Game-List-Container :games="games"></Game-List-Container>
+          </template>
+        </b-tab>
+        <b-tab v-on:click="handleChangeTab(params.upComing)" title="Upcoming">
+          <template v-if="loadingGames && errorRequestGmaes.length === 0">
+            <Loading-wrapper></Loading-wrapper>
+          </template>
+          <template v-else-if="errorRequestGmaes.length !== 0">
+            <Error-wrapper :error="errorRequestGmaes"></Error-wrapper>
+          </template>
+          <template v-else>
+            <Game-List-Container :games="games"></Game-List-Container>
+          </template>
+        </b-tab>
       </b-tabs>
     </div>
   </div>
@@ -30,11 +63,15 @@ import { defineComponent } from "vue";
 import ApiParams from "../constants/index";
 import GameListContainer from "@/components/GameListContainer.vue";
 import { mapActions, mapGetters } from "vuex";
+import LoadingWrapper from "@/components/LoadingWrapper.vue";
+import ErrorWrapper from "@/components/ErrorWrapper.vue";
 
 export default defineComponent({
   name: "HomeView",
   components: {
     GameListContainer,
+    LoadingWrapper,
+    ErrorWrapper,
   },
   data() {
     return {

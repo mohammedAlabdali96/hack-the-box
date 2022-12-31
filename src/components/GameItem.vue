@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/game/123">
+  <router-link :to="`/game/${game._id}`">
     <div
       class="
         game-app-container
@@ -7,55 +7,77 @@
         align-items-center
         flex-md-row
         d-flex
+        p-3
+        my-2
+        border
       "
     >
       <div class="avatar">
-        <img
-          class="img-fluid"
-          src="https://cdn.akamai.steamstatic.com/steam/apps/1648410/header.jpg?t=1654505950"
-        />
+        <img class="img-fluid" alt="game-image" :src="game.header_image" />
       </div>
       <div class="info w-100">
-        <span class="price d-inline d-md-none">
+        <div class="price d-inline d-md-none">
           <div class="discount">
-            <div class="container-item">-25%</div>
+            <div v-if="getDiscountPercent > 0" class="container-item">
+              -{{ getDiscountPercent }}%
+            </div>
           </div>
           <div class="container-item">
             <div>
-              <div class="discounted-price">$9.99</div>
-              <div class="current-price">$7.49</div>
+              <div v-if="getDiscountPercent" class="discounted-price">
+                {{ getFinalPrice }}
+              </div>
+              <div class="current-price">{{ getInitPrice }}</div>
             </div>
           </div>
-        </span>
+        </div>
         <div class="title">
-          RPG Maker MZ - Winding Road and Grassland Tileset
+          {{ game.name }}
         </div>
         <div class="platforms">
           <img
-            class="windows"
-            src="/images/c60164ce4938cd46386a23defa4bdb59.png"
-          /><img
+            v-if="game.platforms.mac"
+            alt="mac"
             class="mac"
-            src="/images/40458cabc134984d5fea298ac01ad68b.png"
+            width="20"
+            height="20"
+            src="@/assets/mac.png"
+          /><img
+            class="window"
+            src="@/assets/microsoft.png"
+            width="20"
+            alt="windows"
+            height="20"
+            v-if="game.platforms.windows"
+          />
+          <img
+            class="linux"
+            width="20"
+            height="20"
+            alt="linux"
+            src="@/assets/penguin.png"
+            v-if="game.platforms.linux"
           />
         </div>
         <div class="tags">
-          <div class="tags-container">
-            <span class="single-tag">RPG</span>
-            <span class="single-tag">Design &amp; Illustration</span>
-            <span class="single-tag">Web Publishing</span>
+          <div class="tags-container" v-for="tag in getTag" :key="tag.id">
+            <span class="single-tag">{{ tag.description }}</span>
           </div>
         </div>
       </div>
 
       <div class="price d-none d-md-block">
         <div class="discount">
-          <div class="container-item">-25%</div>
+          <div class="container-item" v-if="getDiscountPercent > 0">
+            -{{ getDiscountPercent }}%
+          </div>
         </div>
         <div class="container-item">
           <div>
-            <div class="discounted-price">$9.99</div>
-            <div class="current-price">$7.49</div>
+            <div v-if="getDiscountPercent" class="discounted-price">
+              {{ getFinalPrice }}
+            </div>
+            <div class="current-price">{{ getInitPrice }}</div>
           </div>
         </div>
       </div>
@@ -63,7 +85,39 @@
   </router-link>
 </template>
 <script>
-export default {};
+export default {
+  props: {
+    game: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    getInitPrice() {
+      if (this.game.price_overview) {
+        return this.game.price_overview.initial_formatted;
+      } else return "";
+    },
+    getDiscountPercent() {
+      if (this.game.price_overview) {
+        return this.game.price_overview.discount_percent;
+      } else return "";
+    },
+    getFinalPrice() {
+      if (this.game.price_overview) {
+        return this.game.price_overview.final_formatted;
+      } else return "";
+    },
+    getTag() {
+      if (this.game.categories) {
+        return this.game.categories.slice(0, 3);
+      } else return [{ description: "", id: 0 }];
+    },
+  },
+  mounted() {
+    // console.log(this.game);
+  },
+};
 </script>
 <style lang="scss">
 .game-app-container {

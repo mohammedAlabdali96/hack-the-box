@@ -1,10 +1,25 @@
 <template>
-  <div class="home container">
+  <div class="home container d-flex justify-content-center">
     <div>
       <b-tabs content-class="mt-3">
-        <b-tab title="First" active><p>I'm the first tab</p></b-tab>
-        <b-tab title="Second"><p>I'm the second tab</p></b-tab>
-        <b-tab title="Disabled" disabled><p>I'm a disabled tab!</p></b-tab>
+        <b-tab
+          v-on:click="handleChangeTab(params.trending)"
+          title="New and Trending"
+          active
+        >
+          <Game-List-Container></Game-List-Container>
+        </b-tab>
+        <b-tab v-on:click="handleChangeTab(params.seller)" title="Top Sellers"
+          ><p>Top Sellers</p></b-tab
+        >
+        <b-tab
+          v-on:click="handleChangeTab(params.played)"
+          title="What's Being Played"
+          ><p>What's Being Played</p></b-tab
+        >
+        <b-tab v-on:click="handleChangeTab(params.upComing)" title="Upcoming"
+          ><p>Upcoming</p></b-tab
+        >
       </b-tabs>
     </div>
   </div>

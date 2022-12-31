@@ -7,11 +7,24 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     games: [],
+    loadingGames: false,
+    errorRequestGmaes: false,
   },
   getters: {
     games: (state) => state.games,
+    loadingGames: (state) => state.loadingGames,
+    errorRequestGmaes: (state) => state.errorRequestGmaes,
   },
   mutations: {
+    setGames(state, games) {
+      state.games = games;
+    },
+    setLoadingGames(state, payload) {
+      state.loadingGames = payload;
+    },
+    setErrorRequestGmaes(state, payload) {
+      state.errorRequestGmaes = payload;
+    },
   },
   actions: {
     async getGames({ commit }, tabName) {

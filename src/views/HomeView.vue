@@ -29,6 +29,7 @@
 import { defineComponent } from "vue";
 import ApiParams from "../constants/index";
 import GameListContainer from "@/components/GameListContainer.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
   name: "HomeView",
@@ -37,16 +38,22 @@ export default defineComponent({
   },
   data() {
     return {
-      tabName: 1,
       params: ApiParams,
+      tabName: "new_and_trending",
     };
   },
+  computed: {
+    ...mapGetters(["games", "loadingGames", "errorRequestGmaes"]),
+  },
   methods: {
-    handleChangeTab(prame) {
-      console.log(prame);
+    ...mapActions(["getGames"]),
+    handleChangeTab(tabName) {
+      this.getGames(tabName);
     },
   },
-  mounted() {},
+  mounted() {
+    this.getGames(this.tabName);
+  },
 });
 </script>
 

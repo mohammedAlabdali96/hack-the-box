@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     games: [],
     loadingGames: false,
-    errorRequestGmaes: false,
+    errorRequestGmaes: '',
   },
   getters: {
     games: (state) => state.games,
@@ -31,7 +31,7 @@ export default new Vuex.Store({
       try {
         commit("setLoadingGames", true);
         const { data } = await WordService.getGames(tabName);
-        commit("setGames", data);
+        commit("setGames", data.slice(0, 10));
       } catch (error) {
         commit("setErrorRequestGmaes", error.message);
         commit("setLoadingGames", false);

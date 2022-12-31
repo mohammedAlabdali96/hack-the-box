@@ -31,10 +31,21 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "HomeView",
+  components: {
+    GameListContainer,
+  },
+  data() {
+    return {
+      tabName: 1,
+      params: ApiParams,
+    };
+  },
   methods: {
+    handleChangeTab(prame) {
+      console.log(prame);
+    },
   },
-  mounted() {
-  },
+  mounted() {},
 });
 </script>
 

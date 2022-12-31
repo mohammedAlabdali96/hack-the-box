@@ -6,8 +6,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    games: [],
   },
   getters: {
+    games: (state) => state.games,
   },
   mutations: {
   },

@@ -90,6 +90,7 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["getGames", "handleChangeTab"]),
+
     onChangeTab(tabName) {
       this.handleChangeTab(tabName);
       this.getGames(this.tab);

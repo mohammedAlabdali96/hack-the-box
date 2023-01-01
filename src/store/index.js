@@ -10,12 +10,14 @@ export default new Vuex.Store({
     loadingGames: false,
     errorRequestGmaes: "",
     tab: "new_and_trending",
+    game: {}
   },
   getters: {
     games: (state) => state.games,
     loadingGames: (state) => state.loadingGames,
     errorRequestGmaes: (state) => state.errorRequestGmaes,
     tab: (state) => state.tab,
+    game: (state) => state.game,
   },
   mutations: {
     setTab(state, tab) {
@@ -23,6 +25,9 @@ export default new Vuex.Store({
     },
     setGames(state, games) {
       state.games = games;
+    },
+    setGame(state, game) {
+      state.game = game;
     },
     setLoadingGames(state, payload) {
       state.loadingGames = payload;
@@ -35,7 +40,7 @@ export default new Vuex.Store({
     async getGames({ commit }, tab) {
       try {
         commit("setLoadingGames", true);
-        const { data } = await WordService.getGames(tab);
+        const { data } = await WordService.getGamesByTab(tab);
         commit("setGames", data.slice(0, 10));
       } catch (error) {
         commit("setErrorRequestGmaes", error.message);
@@ -48,6 +53,21 @@ export default new Vuex.Store({
 
     handleChangeTab({ commit }, tab) {
       commit("setTab", tab);
+    },
+
+    async getGame({ commit }, id) {
+      try {
+        commit("setLoadingGames", true);
+        const { data } = await WordService.getGame();
+        let game = data.find(o => o._id === id);
+        commit("setGame", game);
+      } catch (error) {
+        commit("setErrorRequestGmaes", error.message);
+        commit("setLoadingGames", false);
+        throw error;
+      } finally {
+        commit("setLoadingGames", false);
+      }
     },
 
     searchText({ commit, dispatch }, searchParam) {

@@ -3,7 +3,7 @@
     <div>
       <b-tabs content-class="mt-3">
         <b-tab
-          v-on:click="handleChangeTab(params.trending)"
+          v-on:click="onChangeTab(params.trending)"
           title="New and Trending"
           active
         >
@@ -17,7 +17,7 @@
             <Game-List-Container :games="games"></Game-List-Container>
           </template>
         </b-tab>
-        <b-tab v-on:click="handleChangeTab(params.seller)" title="Top Sellers">
+        <b-tab v-on:click="onChangeTab(params.seller)" title="Top Sellers">
           <template v-if="loadingGames && errorRequestGmaes.length === 0">
             <Loading-wrapper></Loading-wrapper>
           </template>
@@ -29,7 +29,7 @@
           </template>
         </b-tab>
         <b-tab
-          v-on:click="handleChangeTab(params.played)"
+          v-on:click="onChangeTab(params.played)"
           title="What's Being Played"
         >
           <template v-if="loadingGames && errorRequestGmaes.length === 0">
@@ -42,7 +42,7 @@
             <Game-List-Container :games="games"></Game-List-Container>
           </template>
         </b-tab>
-        <b-tab v-on:click="handleChangeTab(params.upComing)" title="Upcoming">
+        <b-tab v-on:click="onChangeTab(params.upComing)" title="Upcoming">
           <template v-if="loadingGames && errorRequestGmaes.length === 0">
             <Loading-wrapper></Loading-wrapper>
           </template>
@@ -80,12 +80,19 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters(["games", "loadingGames", "errorRequestGmaes"]),
+    ...mapGetters([
+      "games",
+      "loadingGames",
+      "errorRequestGmaes",
+      "searcGameResult",
+      "tab",
+    ]),
   },
   methods: {
-    ...mapActions(["getGames"]),
-    handleChangeTab(tabName) {
-      this.getGames(tabName);
+    ...mapActions(["getGames", "handleChangeTab"]),
+    onChangeTab(tabName) {
+      this.handleChangeTab(tabName);
+      this.getGames(this.tab);
     },
   },
   mounted() {

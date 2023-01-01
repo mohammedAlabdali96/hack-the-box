@@ -8,14 +8,19 @@ export default new Vuex.Store({
   state: {
     games: [],
     loadingGames: false,
-    errorRequestGmaes: '',
+    errorRequestGmaes: "",
+    tab: "new_and_trending",
   },
   getters: {
     games: (state) => state.games,
     loadingGames: (state) => state.loadingGames,
     errorRequestGmaes: (state) => state.errorRequestGmaes,
+    tab: (state) => state.tab,
   },
   mutations: {
+    setTab(state, tab) {
+      state.tab = tab;
+    },
     setGames(state, games) {
       state.games = games;
     },
@@ -27,10 +32,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getGames({ commit }, tabName) {
+    async getGames({ commit }, tab) {
       try {
         commit("setLoadingGames", true);
-        const { data } = await WordService.getGames(tabName);
+        const { data } = await WordService.getGames(tab);
         commit("setGames", data.slice(0, 10));
       } catch (error) {
         commit("setErrorRequestGmaes", error.message);
@@ -39,6 +44,20 @@ export default new Vuex.Store({
       } finally {
         commit("setLoadingGames", false);
       }
+    },
+
+    handleChangeTab({ commit }, tab) {
+      commit("setTab", tab);
+    },
+
+    searchText({ commit, dispatch }, searchParam) {
+      const filteredArray = this.state.games.filter((item) => {
+        return item.name.toLowerCase().startsWith(searchParam.toLowerCase());
+      });
+      if (searchParam.length === 0) {
+        dispatch("getGames", this.state.tab);
+      }
+      commit("setGames", filteredArray);
     },
   },
   modules: {},

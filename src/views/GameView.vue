@@ -1,12 +1,30 @@
 <template>
-    <h1>this is game view</h1>
+  <b-container fluid>
+    <b-row v-if="isloaded && !loadingGames">
+      <b-col sm="12" md="6">
+        <App-Carousel
+          :starting-image="0"
+          :images="getCarouselItems"
+        ></App-Carousel>
+      </b-col>
+    </b-row>
+    <b-row v-else>
+      <b-col class="d-flex align-item-center justify-content-center" sm="12">
+        <h1 class="text-light">loading ...</h1>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 <script>
 export default ({
+import AppCarousel from "@/components/AppCarousel.vue";
   name: "GameView",
   data() {
     return {
     };
+  },
+  components: {
+    AppCarousel,
   },
     getCarouselItems() {
       if (Object.keys(this.game).length !== 0) {

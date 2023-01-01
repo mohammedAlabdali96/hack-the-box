@@ -16,16 +16,29 @@
   </b-container>
 </template>
 <script>
-export default ({
+import { mapActions, mapGetters } from "vuex";
 import AppCarousel from "@/components/AppCarousel.vue";
+
+export default {
   name: "GameView",
   data() {
-    return {
-    };
+    return {};
   },
   components: {
     AppCarousel,
   },
+  computed: {
+    ...mapGetters([
+      "game",
+      "loadingGames",
+      "errorRequestGmaes",
+      "searcGameResult",
+    ]),
+
+    isloaded() {
+      return Object.keys(this.game).length !== 0;
+    },
+
     getCarouselItems() {
       if (Object.keys(this.game).length !== 0) {
         const items = this.game.screenshots.slice();
@@ -41,8 +54,13 @@ import AppCarousel from "@/components/AppCarousel.vue";
       } else return {};
     },
   },
-  mounted() {
-    console.log(this.$route.params.id)
+
+  methods: {
+    ...mapActions(["getGame", "handleChangeTab"]),
   },
-});
+
+  mounted() {
+    this.getGame(this.$route.params.id);
+  },
+};
 </script>

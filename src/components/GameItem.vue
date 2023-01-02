@@ -24,7 +24,11 @@
           </div>
           <div class="container-item">
             <div>
-              <div v-if="getDiscountPercent" class="discounted-price">
+              <div
+                v-if="getFinalPrice"
+                class="discounted-price"
+                :class="{ 'is-discounted': getDiscountPercent }"
+              >
                 {{ getFinalPrice }}
               </div>
               <div class="current-price">{{ getInitPrice }}</div>
@@ -74,7 +78,11 @@
         </div>
         <div class="container-item">
           <div>
-            <div v-if="getDiscountPercent" class="discounted-price">
+            <div
+              v-if="getFinalPrice"
+              class="discounted-price"
+              :class="{ 'is-discounted': getDiscountPercent }"
+            >
               {{ getFinalPrice }}
             </div>
             <div class="current-price">{{ getInitPrice }}</div>
@@ -114,9 +122,6 @@ export default {
       } else return [{ description: "", id: 0 }];
     },
   },
-  mounted() {
-    // console.log(this.game);
-  },
 };
 </script>
 <style lang="scss">
@@ -132,7 +137,6 @@ export default {
     float: left;
     display: inline-block;
     vertical-align: top;
-    // max-width: 169px;
     img {
       vertical-align: baseline;
     }
@@ -192,17 +196,21 @@ export default {
       }
     }
     .container-item {
-      .discounted-price {
+      .is-discounted {
         text-decoration: line-through;
-        font-size: 0.6875rem;
-        color: #626366;
+        color: #656873 !important;
+        font-size: 0.7125rem !important;
+      }
+      .discounted-price {
+        color: #fff;
         position: relative;
+        font-size: 0.8125rem;
         bottom: -2px;
         display: inline;
       }
       .current-price {
         font-size: 0.8125rem;
-        color: #9099a1;
+        color: #fff;
       }
     }
   }

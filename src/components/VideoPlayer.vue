@@ -42,9 +42,9 @@ export default {
 .video-js {
   position: relative !important;
   height: 343px;
-  max-width: 610px;
   padding-top: 0 !important;
   line-height: 0;
+  width:100%;
 }
 .vjs-control-bar {
   line-height: 1;

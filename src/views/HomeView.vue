@@ -59,14 +59,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
 import ApiParams from "../constants/index";
 import GameListContainer from "@/components/GameListContainer.vue";
-import { mapActions, mapGetters } from "vuex";
 import LoadingWrapper from "@/components/LoadingWrapper.vue";
 import ErrorWrapper from "@/components/ErrorWrapper.vue";
+import { mapActions, mapGetters } from "vuex";
 
-export default defineComponent({
+
+export default ({
   name: "HomeView",
   components: {
     GameListContainer,

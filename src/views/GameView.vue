@@ -7,6 +7,9 @@
           :images="getCarouselItems"
         ></App-Carousel>
       </b-col>
+      <b-col sm="12" md="6">
+        <Game-Details :game="game"></Game-Details>
+      </b-col>
     </b-row>
     <b-row v-else>
       <b-col class="d-flex align-item-center justify-content-center" sm="12">
@@ -18,6 +21,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import AppCarousel from "@/components/AppCarousel.vue";
+import GameDetails from "@/components/GameDetails.vue";
 
 export default {
   name: "GameView",
@@ -26,6 +30,7 @@ export default {
   },
   components: {
     AppCarousel,
+    GameDetails,
   },
   computed: {
     ...mapGetters([

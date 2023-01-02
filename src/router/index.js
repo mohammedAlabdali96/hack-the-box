@@ -7,6 +7,11 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/apps",
+    name: "home",
+    component: HomeView,
+  },
+  {
     path: "/",
     name: "home",
     component: HomeView,

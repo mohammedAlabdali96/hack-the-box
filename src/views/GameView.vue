@@ -1,6 +1,17 @@
 <template>
   <b-container>
     <b-row v-if="isloaded && !loadingGames">
+      <b-col
+        cols="12"
+        class="d-flex justify-content-start pb-3 align-items-center"
+      >
+        <button @click="$router.go(-1)" class="back-btn">
+          <img width="20" height="20" src="@/assets/back-arrow-64.png" /><span
+            class="text-light ml-2"
+            >BACK</span
+          >
+        </button>
+      </b-col>
       <b-col cols="12" lg="6">
         <App-Carousel
           :starting-image="0"
@@ -11,7 +22,7 @@
       <b-col cols="12" lg="6">
         <Game-Details :game="game"></Game-Details>
       </b-col>
-       <b-col cols="12">
+      <b-col cols="12">
         <About-The-Game :info="game.about_the_game"></About-The-Game>
       </b-col>
     </b-row>
@@ -27,8 +38,7 @@ import { mapActions, mapGetters } from "vuex";
 import AppCarousel from "@/components/AppCarousel.vue";
 import GameDetails from "@/components/GameDetails.vue";
 import GameName from "@/components/GameName.vue";
-import AboutTheGame from '@/components/AboutTheGame.vue';
-
+import AboutTheGame from "@/components/AboutTheGame.vue";
 
 export default {
   name: "GameView",
@@ -78,3 +88,13 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.back-btn {
+  background-color: transparent;
+  box-sizing: unset;
+  border: 1px solid #fff;
+  padding: 4px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+</style>

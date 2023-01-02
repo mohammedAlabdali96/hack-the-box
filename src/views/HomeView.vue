@@ -5,7 +5,7 @@
         <b-tab
           v-on:click="onChangeTab(params.trending)"
           title="New and Trending"
-          active
+          :active="tabName === params.trending"
         >
           <template v-if="loadingGames && errorRequestGmaes.length === 0">
             <Loading-wrapper></Loading-wrapper>
@@ -14,10 +14,24 @@
             <Error-wrapper :error="errorRequestGmaes"></Error-wrapper>
           </template>
           <template v-else>
-            <Game-List-Container :games="games"></Game-List-Container>
+            <Game-List-Container
+              v-if="searchResult.length > 0"
+              :games="searchResult"
+            ></Game-List-Container>
+
+            <Game-List-Container
+              v-if="searchResult.length > 0"
+              :games="searchResult"
+            ></Game-List-Container>
+
+            <Game-List-Container v-else :games="games"></Game-List-Container>
           </template>
         </b-tab>
-        <b-tab v-on:click="onChangeTab(params.seller)" title="Top Sellers">
+        <b-tab
+          :active="tabName === params.seller"
+          v-on:click="onChangeTab(params.seller)"
+          title="Top Sellers"
+        >
           <template v-if="loadingGames && errorRequestGmaes.length === 0">
             <Loading-wrapper></Loading-wrapper>
           </template>
@@ -25,12 +39,18 @@
             <Error-wrapper :error="errorRequestGmaes"></Error-wrapper>
           </template>
           <template v-else>
-            <Game-List-Container :games="games"></Game-List-Container>
+            <Game-List-Container
+              v-if="searchResult.length > 0"
+              :games="searchResult"
+            ></Game-List-Container>
+
+            <Game-List-Container v-else :games="games"></Game-List-Container>
           </template>
         </b-tab>
         <b-tab
           v-on:click="onChangeTab(params.played)"
           title="What's Being Played"
+          :active="tabName === params.played"
         >
           <template v-if="loadingGames && errorRequestGmaes.length === 0">
             <Loading-wrapper></Loading-wrapper>
@@ -39,10 +59,19 @@
             <Error-wrapper :error="errorRequestGmaes"></Error-wrapper>
           </template>
           <template v-else>
-            <Game-List-Container :games="games"></Game-List-Container>
+            <Game-List-Container
+              v-if="searchResult.length > 0"
+              :games="searchResult"
+            ></Game-List-Container>
+
+            <Game-List-Container v-else :games="games"></Game-List-Container>
           </template>
         </b-tab>
-        <b-tab v-on:click="onChangeTab(params.upComing)" title="Upcoming">
+        <b-tab
+          v-on:click="onChangeTab(params.upComing)"
+          :active="tabName === params.upComing"
+          title="Upcoming"
+        >
           <template v-if="loadingGames && errorRequestGmaes.length === 0">
             <Loading-wrapper></Loading-wrapper>
           </template>
@@ -65,8 +94,7 @@ import LoadingWrapper from "@/components/LoadingWrapper.vue";
 import ErrorWrapper from "@/components/ErrorWrapper.vue";
 import { mapActions, mapGetters } from "vuex";
 
-
-export default ({
+export default {
   name: "HomeView",
   components: {
     GameListContainer,
@@ -86,20 +114,32 @@ export default ({
       "errorRequestGmaes",
       "searcGameResult",
       "tab",
+      "searchResult",
     ]),
   },
   methods: {
     ...mapActions(["getGames", "handleChangeTab"]),
 
     onChangeTab(tabName) {
+      this.$router.push({
+        path: "apps",
+        query: { tab: tabName },
+      });
+
       this.handleChangeTab(tabName);
       this.getGames(this.tab);
     },
   },
   mounted() {
-    this.getGames(this.tabName);
+    this.$router.push({
+      path: "apps",
+      query: { tab: this.$store.getters.tab },
+    });
+
+    this.tabName = this.tab;
+    this.getGames(this.$route.query.tab);
   },
-});
+};
 </script>
 
 <style lang="scss">

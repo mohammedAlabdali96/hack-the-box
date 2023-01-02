@@ -10,7 +10,8 @@ export default new Vuex.Store({
     loadingGames: false,
     errorRequestGmaes: "",
     tab: "new_and_trending",
-    game: {}
+    game: {},
+    searchResult: [],
   },
   getters: {
     games: (state) => state.games,
@@ -18,6 +19,8 @@ export default new Vuex.Store({
     errorRequestGmaes: (state) => state.errorRequestGmaes,
     tab: (state) => state.tab,
     game: (state) => state.game,
+    searchResult: (state) => state.searchResult,
+
   },
   mutations: {
     setTab(state, tab) {
@@ -25,6 +28,9 @@ export default new Vuex.Store({
     },
     setGames(state, games) {
       state.games = games;
+    },
+    setSearchResult(state, value) {
+      state.searchResult = value;
     },
     setGame(state, game) {
       state.game = game;
@@ -59,8 +65,9 @@ export default new Vuex.Store({
       try {
         commit("setLoadingGames", true);
         const { data } = await WordService.getGame();
-        let game = data.find(o => o._id === id);
+        let game = data.find((o) => o._id === id);
         commit("setGame", game);
+        commit("setSearchResult", []);
       } catch (error) {
         commit("setErrorRequestGmaes", error.message);
         commit("setLoadingGames", false);
@@ -70,14 +77,13 @@ export default new Vuex.Store({
       }
     },
 
-    searchText({ commit, dispatch }, searchParam) {
+    searchText({ commit }, searchParam) {
       const filteredArray = this.state.games.filter((item) => {
         return item.name.toLowerCase().startsWith(searchParam.toLowerCase());
       });
-      if (searchParam.length === 0) {
-        dispatch("getGames", this.state.tab);
+      if (filteredArray.length > 0) {
+        commit("setSearchResult", filteredArray);
       }
-      commit("setGames", filteredArray);
     },
   },
   modules: {},

@@ -208,14 +208,9 @@ export default {
   padding: 2px;
 }
 .active {
-  transform: scaleX(2);
+  transform: scaleY(1.2);
   transform-origin: bottom right;
   border: 2px solid #fff;
-  img {
-    height: 250px;
-    width: 250px;
-    // transition: all 250ms;
-  }
 }
 .thumbnail-image {
   img {

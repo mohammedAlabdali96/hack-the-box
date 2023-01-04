@@ -19,12 +19,13 @@
         ></App-Carousel>
 
         <Game-Name :name="game.name"></Game-Name>
+        <Categories-Game
+          v-if="getCategories.length > 0"
+          :categories="getCategories"
+        ></Categories-Game>
       </b-col>
       <b-col cols="12" lg="6">
         <Game-Details :game="game"></Game-Details>
-        <div class="d-flex align-item-center py-3">
-          fdsfkodsfgsdl;fksdfgl;fdskjgs;lfgjsg;kfsjglksfgjflkgjfklgjfglkdfjglfkgjeo
-        </div>
       </b-col>
       <b-col cols="12">
         <About-The-Game :info="game.about_the_game"></About-The-Game>
@@ -43,6 +44,7 @@ import AppCarousel from "@/components/gamePage/AppCarousel.vue";
 import GameDetails from "@/components/gamePage/GameDetails.vue";
 import GameName from "@/components/gamePage/GameName.vue";
 import AboutTheGame from "@/components/gamePage/AboutTheGame.vue";
+import CategoriesGame from "@/components/gamePage/CategoriesGame.vue";
 
 export default {
   name: "GameView",
@@ -54,6 +56,7 @@ export default {
     GameDetails,
     GameName,
     AboutTheGame,
+    CategoriesGame,
   },
   computed: {
     ...mapGetters([
@@ -65,6 +68,12 @@ export default {
 
     isloaded() {
       return Object.keys(this.game).length !== 0;
+    },
+
+    getCategories() {
+      if (this.game.categories) {
+        return this.game.categories;
+      } else return "";
     },
 
     getCarouselItems() {

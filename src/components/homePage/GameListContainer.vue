@@ -6,7 +6,7 @@
 </template>
 <script>
 import GameItem from "./GameItem.vue";
-import SearchInput from './Search.vue'
+import SearchInput from "./Search.vue";
 export default {
   name: "GameListContainer",
   data() {
@@ -20,26 +20,22 @@ export default {
       required: true,
     },
   },
-  methods: {
-    handleSearch() {
-      console.log(this.searchText);
-    },
-  },
+  methods: {},
   components: {
     GameItem,
-    SearchInput
+    SearchInput,
   },
 };
 </script>
 <style lang="scss">
 .game-list-container {
   margin-top: 16px;
-   input {
+  input {
     width: 75%;
     overflow: visible;
     background: inherit;
     border: 2px solid #fff;
     color: #fff;
-   }
+  }
 }
 </style>

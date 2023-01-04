@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import VideoPlayer from "@/components/VideoPlayer.vue";
+import VideoPlayer from "@/components/gamePage/VideoPlayer.vue";
 
 export default {
   name: "AppCarousel",

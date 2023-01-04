@@ -19,11 +19,6 @@
               :games="searchResult"
             ></Game-List-Container>
 
-            <Game-List-Container
-              v-if="searchResult.length > 0"
-              :games="searchResult"
-            ></Game-List-Container>
-
             <Game-List-Container v-else :games="games"></Game-List-Container>
           </template>
         </b-tab>
@@ -89,7 +84,7 @@
 
 <script lang="ts">
 import ApiParams from "../constants/index";
-import GameListContainer from "@/components/GameListContainer.vue";
+import GameListContainer from "@/components/homePage/GameListContainer.vue";
 import LoadingWrapper from "@/components/LoadingWrapper.vue";
 import ErrorWrapper from "@/components/ErrorWrapper.vue";
 import { mapActions, mapGetters } from "vuex";
@@ -131,10 +126,12 @@ export default {
     },
   },
   mounted() {
-    this.$router.push({
-      path: "apps",
-      query: { tab: this.$store.getters.tab },
-    }).catch(()=>{});
+    this.$router
+      .push({
+        path: "apps",
+        query: { tab: this.$store.getters.tab },
+      })
+      .catch(() => {});
 
     this.tabName = this.tab;
     this.getGames(this.$route.query.tab);

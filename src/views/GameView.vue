@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="mt-4">
     <b-row v-if="isloaded && !loadingGames">
       <b-col
         cols="12"
@@ -17,10 +17,14 @@
           :starting-image="0"
           :images="getCarouselItems"
         ></App-Carousel>
+
         <Game-Name :name="game.name"></Game-Name>
       </b-col>
       <b-col cols="12" lg="6">
         <Game-Details :game="game"></Game-Details>
+        <div class="d-flex align-item-center py-3">
+          fdsfkodsfgsdl;fksdfgl;fdskjgs;lfgjsg;kfsjglksfgjflkgjfklgjfglkdfjglfkgjeo
+        </div>
       </b-col>
       <b-col cols="12">
         <About-The-Game :info="game.about_the_game"></About-The-Game>
@@ -35,10 +39,10 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import AppCarousel from "@/components/AppCarousel.vue";
-import GameDetails from "@/components/GameDetails.vue";
-import GameName from "@/components/GameName.vue";
-import AboutTheGame from "@/components/AboutTheGame.vue";
+import AppCarousel from "@/components/gamePage/AppCarousel.vue";
+import GameDetails from "@/components/gamePage/GameDetails.vue";
+import GameName from "@/components/gamePage/GameName.vue";
+import AboutTheGame from "@/components/gamePage/AboutTheGame.vue";
 
 export default {
   name: "GameView",

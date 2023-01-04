@@ -134,7 +134,7 @@ export default {
     this.$router.push({
       path: "apps",
       query: { tab: this.$store.getters.tab },
-    });
+    }).catch(()=>{});
 
     this.tabName = this.tab;
     this.getGames(this.$route.query.tab);

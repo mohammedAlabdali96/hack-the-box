@@ -3,7 +3,7 @@
     <div class="mb-3">
       <img class="img-fluid w-100" :src="game.header_image" />
     </div>
-    <div class="mb-3">
+    <div class="mb-3 px-2">
       {{ game.short_description }}
     </div>
     <div>

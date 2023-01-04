@@ -1,5 +1,5 @@
 <template>
-  <div class="home container d-flex justify-content-center">
+  <div class="home mt-4 container d-flex justify-content-center">
     <div>
       <b-tabs content-class="mt-3">
         <b-tab

@@ -59,7 +59,6 @@ export default new Vuex.Store({
 
     handleChangeTab({ commit }, tab) {
       commit("setSearchResult", []);
-
       commit("setTab", tab);
     },
 

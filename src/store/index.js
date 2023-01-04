@@ -64,9 +64,8 @@ export default new Vuex.Store({
     async getGame({ commit }, id) {
       try {
         commit("setLoadingGames", true);
-        const { data } = await WordService.getGame();
-        let game = data.find((o) => o._id === id);
-        commit("setGame", game);
+        const { data } = await WordService.getGame(id);
+        commit("setGame", data[0]);
         commit("setSearchResult", []);
       } catch (error) {
         commit("setErrorRequestGmaes", error.message);

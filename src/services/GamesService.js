@@ -4,7 +4,7 @@ export default {
   getGamesByTab(tab) {
     return Api().get(`/apps?tab=${tab}`);
   },
-  getGame() {
-    return Api().get(`/apps`);
+  getGame(id) {
+    return Api().get(`https://htb-steam-api.vercel.app/api/apps?appid=${id}`);
   },
 };

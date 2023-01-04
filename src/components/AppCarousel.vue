@@ -94,7 +94,6 @@ export default {
       if (active < 0) {
         active = this.images.length - 1;
       }
-      this.activateImage(active);
     },
     activateImage(imageIndex) {
       this.activeImage = imageIndex;
@@ -156,7 +155,24 @@ export default {
       this.startCountdown();
     }
   },
-  props: ["startingImage", "images", "autoSlideInterval", "showProgressBar"],
+  props: {
+    images: {
+      type: Array,
+      required: true,
+    },
+    startingImage: {
+      type: Number,
+      required: false,
+    },
+    autoSlideInterval: {
+      type: Boolean,
+      required: false,
+    },
+    showProgressBar: {
+      type: Boolean,
+      required: false,
+    },
+  },
 };
 </script>
 
@@ -190,6 +206,16 @@ export default {
   align-items: center;
   cursor: pointer;
   padding: 2px;
+}
+.active {
+  transform: scaleX(2);
+  transform-origin: bottom right;
+  border: 2px solid #fff;
+  img {
+    height: 250px;
+    width: 250px;
+    // transition: all 250ms;
+  }
 }
 .thumbnail-image {
   img {
